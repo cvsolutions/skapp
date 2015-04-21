@@ -1,1 +1,60 @@
-profile
+<?php
+use User\Form\FieldSet\UserFieldSet;
+
+/** @var \User\Form\ProfileForm $profileForm */
+$profileForm = $this->profileForm;
+$profileForm->setAttribute('action', $this->url('user/profile'));
+$profileForm->setAttribute('autocomplete', 'off');
+$profileForm->prepare();
+
+$fieldSetRegistration = $profileForm->get(\User\Form\FieldSet\UserFieldSet::NAME);
+$validationGroup = $profileForm->getValidationGroup();
+
+$openTemplateError = '<div><div class="alert alert-danger" role="alert">';
+$closeTemplateError = '</div></div>';
+$this->formElementErrors()
+    ->setMessageOpenFormat($openTemplateError)
+    ->setMessageCloseString($closeTemplateError);
+?>
+
+<?php echo $this->form()->openTag($profileForm); ?>
+
+<?php // Render element
+$element = $fieldSetRegistration->get(UserFieldSet::INPUT_NAME_EMAIL);
+$element->setAttributes(
+    [
+        'class' => 'form-control',
+        'placeholder' => ucfirst($this->translate("email")),
+        'data-ng:model' => UserFieldSet::INPUT_NAME_EMAIL,
+        'data-ng-init' => UserFieldSet::INPUT_NAME_EMAIL . "='". $element->getValue() ."'",
+        'data-skapp-filter-pattern' => '[0-9A-Za-z_]*',
+        'data-skapp-filter-max-length' => 15,
+        'data-skapp-filter-lowercase' => '',
+    ]
+);
+echo $this->formElement($element);
+?>
+<?php echo $this->formElementErrors($element); ?>
+
+<?php // Render element
+$element = $fieldSetRegistration->get(UserFieldSet::INPUT_NAME_USERNAME);
+$element->setAttributes(
+    [
+        'class' => 'form-control',
+        'placeholder' => ucfirst($this->translate("userName")),
+        'data-ng:model' => UserFieldSet::INPUT_NAME_USERNAME,
+        'data-ng-init' => UserFieldSet::INPUT_NAME_USERNAME . "='". $element->getValue() ."'",
+        'data-skapp-filter-pattern' => '[0-9A-Za-z_]*',
+        'data-skapp-filter-max-length' => 15,
+        'data-skapp-filter-lowercase' => '',
+    ]
+);
+echo $this->formElement($element);
+?>
+
+<?php echo $this->formElementErrors($element); ?>
+    <button type="submit" class="btn btn-border btn-register btn-block btn-lg">
+        <?php echo ucfirst($this->translate("SALVA")); ?>
+    </button>
+
+<?php echo $this->form()->closeTag(); ?>

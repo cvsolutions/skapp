@@ -36,4 +36,9 @@ class UserModel extends ObservableModel implements AuthModelInterface
     	$itemModel = $this->getServiceLocator()->get('Application\Model\ItemModel');
     	return $itemModel->findItemsByUser($userId);
     }
+
+    public function findByExcludeIdentity($identity)
+    {
+        return $this->find((new UserCollectionCriteria())->setExcludeEmail($identity));
+    }
 }

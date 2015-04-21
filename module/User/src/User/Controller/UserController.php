@@ -131,7 +131,30 @@ class UserController extends AbstractActionController
 
     public function profileAction()
     {
-    	return new ViewModel();
+        $prg = $this->prg();
+        if ($prg instanceof Response) {
+            return $prg;
+        }
+
+        $userModel = $this->model()->get('User\Model\UserModel');
+        $identity = $this->identity();
+        $user = $userModel->findByIdentity($identity)->current();
+
+        $profileForm = $this->serviceLocator->get('FormElementManager')->get('User\Form\ProfileForm');
+        $profileForm->bind($user);
+
+        if (is_array($prg)) {
+            $profileForm->setData($prg);
+            if ($profileForm->isValid()) {
+                $user->save();
+                var_dump($prg);
+            }
+
+        }
+
+        return new ViewModel([
+            'profileForm' => $profileForm
+        ]);
     }
 
     public function profileEditAction()

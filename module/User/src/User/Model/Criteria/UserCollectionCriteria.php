@@ -115,5 +115,12 @@ class UserCollectionCriteria extends FindAllCriteria
         }
         return $this;
     }
+
+    public function setExcludeEmail($identity)
+    {
+        $this->selectionCriteria['email']['$eq'] = $identity;
+        $this->selectionCriteria['email']['$ne'] = $identity;
+        return $this;
+    }
     
 }

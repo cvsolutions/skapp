@@ -34,7 +34,7 @@ return [
     'session_config' => [
         'name'                  => 'PHPSID',
         'use_cookies'           => true,
-        'cookie_domain'         => 'skapptest.local', //yourdomain.com
+        'cookie_domain'         => 'skapp.dev', //yourdomain.com
         'cookie_httponly'       => true,
         'cookie_lifetime'       => 2592000, //30 days
         'remember_me_seconds'   => 2592000, //30 days
